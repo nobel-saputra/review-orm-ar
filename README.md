@@ -78,7 +78,7 @@ Kita akan membuat *database* baru dan user khusus untuk proyek ini.
 
 1.  Kloning repositori proyek ke mesin lokal Anda:
     ```bash
-    git clone [LINK_REPOSITORY_ANDA_DI_SINI]
+    git clone https://github.com/nobel-saputra/review-orm-ar
     cd nama-folder-proyek-anda
     ```
     *(Ganti `[LINK_REPOSITORY_ANDA_DI_SINI]` dengan URL repositori GitHub Anda dan `nama-folder-proyek-anda` dengan nama folder yang dibuat oleh `git clone`)*
