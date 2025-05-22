@@ -1,0 +1,44 @@
+// prisma/schema.prisma
+// Skema database ini akan digunakan oleh Prisma untuk menghasilkan Prisma Client dan Migrasi.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Penting: Pastikan penyedia ini sesuai dengan jenis database yang digunakan (misal: "mysql")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique // Alamat email harus unik untuk setiap pengguna
+  name      String?  // Nama pengguna bersifat opsional (dapat berupa null)
+  createdAt DateTime @default(now()) // Timestamp otomatis saat record dibuat
+  updatedAt DateTime @updatedAt // Timestamp otomatis saat record terakhir diperbarui
+
+  // Relasi One-to-Many: Satu User dapat memiliki banyak Post
+  posts     Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean  @default(false) // Defaultnya adalah false (belum terpublikasi)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relasi One-to-Many: Sebuah Post dimiliki oleh satu Author (User)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int      // Kunci asing (Foreign key) yang menunjuk ke ID model User
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description Json?   // Kolom ini dirancang untuk menyimpan data dalam format JSON
+  // Ganti String[] menjadi Json?
+  tags        Json?   // Kolom ini akan menyimpan array of strings sebagai JSON (e.g., ["tag1", "tag2"])
+}
